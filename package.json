@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "parcel": "^2.6.2"
+    "parcel": "^2.6.2",
+    "snackbar": "^1.1.0"
   }
 }
