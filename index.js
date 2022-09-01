@@ -1,7 +1,8 @@
 import FetchWrapper from "./fetch-wrapper.js";
 import { capitalize, calculateCalories } from "./helpers.js";
 import snackbar from "snackbar";
-import AppData from "./app-data.js"
+import AppData from "./app-data.js";
+import "chart.js";
 
 const API = new FetchWrapper(
   "https://firestore.googleapis.com/v1/projects/jsdemo-3f387/databases/(default)/documents/projecteFood"
@@ -15,8 +16,10 @@ const name = document.querySelector("#create-name");
 const carbs = document.querySelector("#create-carbs");
 const protein = document.querySelector("#create-protein");
 const fat = document.querySelector("#create-fat");
+const totalCalories = document.querySelector("#total-calories");
 
 const displayEntry = (name, carbs, protein, fat) => {
+  appData.addFood(carbs, protein, fat);
   list.insertAdjacentHTML(
     "beforeend",
     `<li class="card">
@@ -57,9 +60,10 @@ form.addEventListener("submit", (event) => {
 
     snackbar.show("Food added successfully.");
 
+    displayEntry(name.value, carbs.value, protein.value, fat.value);
     
 
-    displayEntry(name.value, carbs.value, protein.value, fat.value);
+    render();
 
     name.value = "";
     carbs.value = "";
@@ -80,7 +84,46 @@ const init = () => {
           fields.fat.integerValue
         );
       });
+      
+      render();
     });
 }
 
+let chartInstance = null;
+const renderChart = () => {
+  chartInstance?.destroy();
+  const context = document.querySelector("#app-chart").getContext("2d");
+
+  chartInstance = new Chart(context, {
+    type: "bar",
+    data: {
+      labels: ["Carbs", "Protein", "Fat"],
+      datasets: [
+        {
+          label: "Macronutrients",
+          data: [appData.getTotalCarbs(), appData.getTotalProtein(), appData.getTotalFat()],
+          backgroundColor: ["#25AEEE", "#FECD52", "#57D269"],
+          borderWidth: 3, // example of other customization
+        },
+      ],
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+  });
+};
+
+
 init();
+
+const render=()=>{
+  renderChart();
+  totalCalories.textContent = appData.getTotalCalories();
+
+}
