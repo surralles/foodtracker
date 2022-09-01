@@ -128,6 +128,7 @@ const updateTotalCalories = () => {
 const render = () => {
     renderChart();
     updateTotalCalories();
+}
 
   init();
 
