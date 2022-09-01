@@ -11,5 +11,6 @@
   "dependencies": {
     "parcel": "^2.6.2",
     "snackbar": "^1.1.0"
+    "chart":"^2.9.4"
   }
 }
