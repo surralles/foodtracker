@@ -30,9 +30,9 @@ export default class AppData {
   }
 
    getTotalCalories(){
-     return (this.getTotalCarbs()*4 +
+     return this.getTotalCarbs()*4 +
        this.getTotalProtein()*4 +
-       this.getTotalFat()*9)
+       this.getTotalFat()*9
 
    }
 }
