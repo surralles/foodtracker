@@ -120,10 +120,14 @@ const renderChart = () => {
 };
 
 
-init();
 
-const render=()=>{
-  renderChart();
-  totalCalories.textContent = appData.getTotalCalories();
-
+const updateTotalCalories = () => {
+    totalCalories.textContent = appData.getTotalCalories();
 }
+
+const render = () => {
+    renderChart();
+    updateTotalCalories();
+
+  init();
+
